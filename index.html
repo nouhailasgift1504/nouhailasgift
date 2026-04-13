@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouhaila's Surprise 🎂</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* الخلفية اللي فيها الكتابة كاملة */
+            background-image: url('https://i.postimg.cc/W3dJDGBd/NOU-FIRST-PAGE.png');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #page1 {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* زر الكيكة بوضعية دقيقة فوق الصورة الأصلية */
+        .cake-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            position: absolute;
+            bottom: 15%; /* بلاصة الكيكة فالتصميم ديالك */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .cake-img {
+            width: 180px; /* قياس الكيكة اللي عطيتي */
+            height: auto;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* حاوية الهدايا */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            width: 85%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .gifts-row {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gift-box {
+            background: #fff;
+            border: 2px solid #ffccd5;
+            padding: 15px 5px;
+            border-radius: 15px;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .gift-box p { color: #ff4d6d; font-weight: bold; font-size: 0.8rem; margin-top: 5px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="page1">
+        <button class="cake-btn" onclick="showGifts()">
+            <img src="https://i.postimg.cc/3w4Kmtx1/NOOU-CAKE.png" class="cake-img">
+        </button>
+    </div>
+
+    <div id="step2" class="card">
+        <h2 style="color: #ff4d6d;">I knew it! 😍</h2>
+        <p>ختاري هدية من هاد الـ 3</p>
+        <div class="gifts-row">
+            <div class="gift-box" onclick="alert('الرسالة المقسمة هنا')">🎁<p>رسالة</p></div>
+            <div class="gift-box" onclick="alert('الصور هنا')">🎁<p>ذكريات</p></div>
+            <div class="gift-box" onclick="alert('الفيديو هنا')">🎁<p>فيديو</p></div>
+        </div>
+    </div>
+
+    <script>
+        function showGifts() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            // تغيير الخلفية لشي حاجة بسيطة باش تبان الكارط مزيان
+            document.body.style.backgroundImage = "none";
+            document.body.style.backgroundColor = "#E4C1F9";
+        }
+    </script>
+</body>
+</html>
