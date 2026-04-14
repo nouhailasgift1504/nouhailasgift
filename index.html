@@ -80,9 +80,8 @@
             z-index: 10;
         }
 
-        /* نبض القلب (فقط لصفحة الرسائل) */
         .heart-pulse {
-            width: 65px;
+            width: 60px;
             animation: softHeartbeat 2s infinite ease-in-out;
         }
 
@@ -91,10 +90,9 @@
             50% { transform: scale(1.15); }
         }
 
-        .nav-btn { background: none; border: none; cursor: pointer; width: 55px; }
+        .nav-btn { background: none; border: none; cursor: pointer; width: 50px; }
         .nav-img { width: 100%; }
 
-        /* حركة الإشارة (فقط لصفحات الفيديو والصور) */
         .pointing-back {
             animation: pointingAction 0.8s infinite alternate ease-in-out;
         }
@@ -104,7 +102,7 @@
             to { transform: translateX(12px); }
         }
 
-        /* --- صفحة الرسالة --- */
+        /* --- صفحة الرسالة (الإصلاح هنا) --- */
         #messagePage {
             display: none; width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png');
@@ -114,22 +112,28 @@
 
         .message-box-center {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 18%; left: 50%;
+            transform: translateX(-50%);
+            width: 78%; 
+            height: 60%; /* حددنا الطول باش ما يخرجش على الورقة */
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 35px;
+            overflow-y: auto; /* هادي هي اللي غتخلي النص يهبط لداخل */
+            padding: 5px;
+            scrollbar-width: none; /* حيدنا مسطرة التمرير باش يبقى المنظر زوين */
         }
+        
+        .message-box-center::-webkit-scrollbar { display: none; }
 
         .message-content {
-            width: 92%;
+            width: 100%;
             color: #1a1a1a;
-            font-size: 1.3rem;
-            line-height: 1.5;
+            font-size: 1.15rem; /* صغرنا الخط شوية للهواتف */
+            line-height: 1.6;
             text-align: left;
             white-space: pre-line;
             font-weight: 800;
-            margin-top: -40px;
+            margin: 0;
         }
 
         /* --- صفحة الفيديو --- */
@@ -203,9 +207,7 @@
                 <button class="nav-btn" id="nextBtn" onclick="nextPage()">
                     <img src="https://i.postimg.cc/tgmfDG8z/nexr-botton.png" class="nav-img">
                 </button>
-
                 <img src="https://i.postimg.cc/zDyMFY4M/heart-ben-back-and-next.png" class="heart-pulse">
-
                 <button class="nav-btn" onclick="prevPage()">
                     <img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img">
                 </button>
@@ -216,7 +218,6 @@
             <div class="video-wrapper">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/xOsR37vYMDc" frameborder="0" allowfullscreen></iframe>
             </div>
-
             <div class="nav-buttons" style="justify-content: flex-end;">
                 <button class="nav-btn pointing-back" onclick="backToStep2()">
                     <img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img">
@@ -226,7 +227,6 @@
 
         <div id="photosPage">
             <div class="moving-elements"></div>
-            
             <div class="nav-buttons" style="justify-content: flex-end;">
                 <button class="nav-btn pointing-back" onclick="backToStep2()">
                     <img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img">
@@ -280,7 +280,11 @@
         }
 
         function updateMsg() {
-            document.getElementById('msgContent').innerText = messagePages[currentPage];
+            const content = document.getElementById('msgContent');
+            content.innerText = messagePages[currentPage];
+            // كيرجع التمرير للفوق فاش تبدل الصفحة
+            document.querySelector('.message-box-center').scrollTop = 0;
+            
             const nextBtn = document.getElementById('nextBtn');
             if (currentPage === messagePages.length - 1) {
                 nextBtn.style.visibility = 'hidden';
