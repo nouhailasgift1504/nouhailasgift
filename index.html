@@ -78,19 +78,22 @@
         }
         .message-content { color: #1a1a1a; font-size: 1.05rem; line-height: 1.6; text-align: left; white-space: pre-line; font-weight: 800; }
 
-        /* --- تعديل الفيديو (صغير ومسنتر) --- */
+        /* --- تعديل أبعاد الفيديو ليناسب GitHub وجميع المتصفحات --- */
         #step3 { background-image: url('https://i.postimg.cc/rygbSCy8/video-bg-v3.png'); }
         #photosPage { background-image: url('https://i.postimg.cc/vZMt3DQh/bg-pic-v4.png'); }
         
         .video-wrapper { 
             position: absolute; 
-            top: 45.8%; /* مسنتر وسط الصندوق */
+            top: 45.8%; 
             left: 50%; 
             transform: translateX(-50%); 
-            width: 76%; /* العرض اللي طلبتي */
+            /* العرض تم ضبطه ليكون 76% من الشاشة لضمان عدم خروجه عن الإطار البنفسجي */
+            width: 76%; 
+            /* استخدام aspect-ratio لضمان بقاء الفيديو مستطيلاً 16:9 مهما كان حجم الشاشة */
             aspect-ratio: 16 / 9; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .moving-elements { 
@@ -100,10 +103,10 @@
             animation: heartPulseSlow 2s infinite ease-in-out; pointer-events: none; 
         }
 
-        /* --- أزرار التنقل (متوافقة مع آيفون) --- */
+        /* --- أزرار التنقل --- */
         .nav-buttons {
             position: absolute; 
-            bottom: calc(env(safe-area-inset-bottom) + 20px); /* دفع الأزرار فوق بار سفاري */
+            bottom: calc(env(safe-area-inset-bottom) + 20px); 
             width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 45px; box-sizing: border-box; z-index: 20;
