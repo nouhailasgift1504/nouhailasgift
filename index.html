@@ -78,24 +78,35 @@
         }
         .message-content { color: #1a1a1a; font-size: 1.05rem; line-height: 1.6; text-align: left; white-space: pre-line; font-weight: 800; }
 
-        /* --- تعديل أبعاد الفيديو ليناسب GitHub وجميع المتصفحات --- */
+        /* --- تعديل صفحة الفيديو (Step 3) --- */
         #step3 { background-image: url('https://i.postimg.cc/rygbSCy8/video-bg-v3.png'); }
-        #photosPage { background-image: url('https://i.postimg.cc/vZMt3DQh/bg-pic-v4.png'); }
         
+        .video-fixed-container {
+            position: absolute;
+            top: 15%; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
         .video-wrapper { 
-            position: absolute; 
-            top: 43%; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            /* العرض تم ضبطه ليكون 76% من الشاشة لضمان عدم خروجه عن الإطار البنفسجي */
+            position: relative;
+            top: -2.5%; /* رفع الفيديو للأعلى ليناسب الإطار البنفسجي */
             width: 76%; 
-            /* استخدام aspect-ratio لضمان بقاء الفيديو مستطيلاً 16:9 مهما كان حجم الشاشة */
             aspect-ratio: 16 / 9; 
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            pointer-events: auto;
         }
 
+        /* --- صفحة الصور والتحريك --- */
+        #photosPage { background-image: url('https://i.postimg.cc/vZMt3DQh/bg-pic-v4.png'); }
         .moving-elements { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background-image: url('https://i.postimg.cc/ydDWfGTH/moving-things-dyal-pg-piic.png'); 
@@ -103,7 +114,7 @@
             animation: heartPulseSlow 2s infinite ease-in-out; pointer-events: none; 
         }
 
-        /* --- أزرار التنقل --- */
+        /* --- أزرار التنقل (آيفون) --- */
         .nav-buttons {
             position: absolute; 
             bottom: calc(env(safe-area-inset-bottom) + 20px); 
@@ -146,8 +157,10 @@
         </div>
 
         <div id="step3" class="page-section">
-            <div class="video-wrapper">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/xOsR37vYMDc" frameborder="0" allowfullscreen></iframe>
+            <div class="video-fixed-container">
+                <div class="video-wrapper">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/xOsR37vYMDc" frameborder="0" allowfullscreen></iframe>
+                </div>
             </div>
             <div class="nav-buttons" style="justify-content: flex-end;">
                 <button class="nav-btn pointing-back" onclick="backToStep2()"><img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img"></button>
