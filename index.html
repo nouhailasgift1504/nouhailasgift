@@ -12,33 +12,26 @@
             margin: 0; padding: 0;
             height: 100dvh; width: 100%;
             overflow: hidden;
-            background-color: #f0f0f0; /* لون خلفية خارجي هادئ */
+            background-color: #f9ebff;
             font-family: 'Chalkboard SE', 'Comic Neue', cursive;
             display: flex; justify-content: center; align-items: center;
+            position: fixed; 
         }
 
         #app-container {
-            width: 92vw; /* ترك مسافة بسيطة من الجوانب */
-            height: 92dvh; /* ترك مسافة من الأعلى والأسفل */
+            width: 100vw; height: 100dvh;
             max-width: 450px;
-            max-height: 850px;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            
-            /* الحواف الدائرية المطلوبة لجميع الصفحات */
-            border-radius: 40px; 
-            border: 8px solid #fff; /* إطار أبيض رقيق يعطي شكل الهاتف */
-            
-            overflow: hidden; /* هذا يضمن أن كل الصفحات تتبع نفس الدوران */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
             background-color: #fff;
-            z-index: 10;
         }
 
         .page-section {
             display: none; width: 100%; height: 100%;
-            background-size: cover; /* تغيير لـ cover لملء الحواف الدائرية */
+            background-size: contain; 
             background-repeat: no-repeat;
-            background-position: center; 
+            background-position: center top; 
             position: relative;
         }
 
@@ -55,9 +48,7 @@
         .pointing-back { animation: pointingAction 0.8s infinite alternate ease-in-out; }
         .cake-btn {
             position: absolute; 
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom) + 8%);
             background: none; border: none; cursor: pointer;
             animation: cakeBounce 2s infinite ease-in-out;
         }
@@ -68,48 +59,68 @@
 
         /* --- الأقسام --- */
         #page1 { display: flex; justify-content: center; background-image: url('https://i.postimg.cc/W3HKgsj0/NOU-FIRST-PAGE-v2.png'); }
-        .cake-img { width: 250px; }
+        .cake-img { width: 280px; }
 
         #step2 { background-image: url('https://i.postimg.cc/GmGwkK8Q/bg-nexy-page.png'); }
         .icons-container {
-            position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);
-            display: flex; gap: 16px; width: 85%;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; gap: 16px; width: 90%;
         }
         .icon-btn { background: none; border: none; cursor: pointer; flex: 1; opacity: 0; transform: translateY(40px); }
         .show-icon { animation: iconPopUp 0.6s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .icon-img { width: 100%; max-width: 90px; }
+        .icon-img { width: 100%; max-width: 100px; }
 
-        #messagePage { background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png'); }
+        #messagePage { background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png'); background-size: 100% 100%; }
         .message-scroll-area {
-            position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
-            width: 75%; height: 55%; overflow-y: auto; padding: 15px;
+            position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
+            width: 72%; height: 58%; overflow-y: auto; padding: 10px;
             scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
         .message-content { color: #1a1a1a; font-size: 1.05rem; line-height: 1.6; text-align: left; white-space: pre-line; font-weight: 800; }
 
+        /* --- تعديل صفحة الفيديو (Step 3) --- */
         #step3 { background-image: url('https://i.postimg.cc/rygbSCy8/video-bg-v3.png'); }
+        
         .video-fixed-container {
-            position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
-            width: 100%; height: 70%; display: flex; justify-content: center; align-items: center;
-        }
-        .video-wrapper { 
-            position: relative; width: 80%; aspect-ratio: 16 / 9; 
-            border-radius: 20px; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: absolute;
+            top: 12%; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
         }
 
+        .video-wrapper { 
+            position: relative;
+            top: 5%; /* رفع الفيديو للأعلى ليناسب الإطار البنفسجي */
+            width: 76%; 
+            aspect-ratio: 16 / 9; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            pointer-events: auto;
+        }
+
+        /* --- صفحة الصور والتحريك --- */
         #photosPage { background-image: url('https://i.postimg.cc/vZMt3DQh/bg-pic-v4.png'); }
         .moving-elements { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background-image: url('https://i.postimg.cc/ydDWfGTH/moving-things-dyal-pg-piic.png'); 
-            background-size: cover; animation: heartPulseSlow 2s infinite ease-in-out;
+            background-size: contain; background-repeat: no-repeat; 
+            animation: heartPulseSlow 2s infinite ease-in-out; pointer-events: none; 
         }
 
-        /* --- أزرار التنقل --- */
+        /* --- أزرار التنقل (آيفون) --- */
         .nav-buttons {
-            position: absolute; bottom: 30px; width: 100%;
+            position: absolute; 
+            bottom: calc(env(safe-area-inset-bottom) + 20px); 
+            width: 100%;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px; box-sizing: border-box; z-index: 20;
+            padding: 0 45px; box-sizing: border-box; z-index: 20;
         }
         .nav-btn { background: none; border: none; cursor: pointer; width: 45px; }
         .nav-img { width: 100%; }
@@ -168,7 +179,7 @@
         const messagePages = [
             `ehm ehhmm test allah allah hh db 01:32 06/04/2026 ylh db shweeya bash kena dawen appel video darook ktafeek b shteeh hhh shikha trax hh\n\nnouhaila nty wahd lhaja ly ghalya bzzf alya ulh arafteek sodfa ms kant ahsan sodfa fhyaty mashy bzzf dyal lwaqt bash arafteek ms ulh hta mashy gher kanbgheek shy hajaa bzzf nty mashy gher hbebty nty benty maghansash nhar gelty lya kanshof nas mea walidihum u kaybqa fya lhal mn tema Qarert neawdeek ela kulshy neawdek ela kol mara bkety feha ula tQaleQty feha ula adak feha shy had Qarert nkon sanad leek u dhar leek tsendy eleeh rask f ay haja ila denya kulha khelateek ana ulh mankhaleek wakha nearf nmoot`,
             `aref rasy kanbqa mbarztek b finek u dekhly matmshish ms gher kankhaf aleek mn kulshy kankhaf aleek mn bnadem mn rasy mn kulshy kankhaaf aleek ktar mn rasy ulh frask kent Qbel ma nearfek kangol mpomken nder l'operation ela lQalb u masoQesh ly bgha itra itra ms mly arafteek wleet khayf bzzf khayf nkhalek bohdek amerny kheft mn lmot ulh ms wleet khayf bzzf wlet kanthela frasy ela Qeblek bash tebQaysh buhdek\n\namerny kheft nkhser shy had ula aslan makntsaweQsh lshy had hta eraftek wleet hateek f maQam kbeer bzzf nQdar ngoleek nty aktar haja kankhaf aleeha fhad denya u mabagheesh nfeQ shy nhar matkoniish meaya l ay sabab`,
-            `nty rah l amal dyaly fhad lhayat kent kareh denya kareh rasy kareh kulshy dkhalty lhyaty bdelteeha l ahsan khleteny nfrah bzzf ndhak mn Qalby fhal shy nor lQany west dlaam u med lya idoo ateteny haja alash aslan nkhaf u nbghey neash\n\nkhbet aleek wahd lhaja ms khasny ngolha leek ms mabghiteksh tQalQy hafsa mashy khet rajel mina ms hya l'ex dyaly dwezt meaha 4 ans u ktar imken utfareQna db 2 ans hya ly mselfany 4 millions ly gelt lek u mzl kanred leha db u hya ly gelt leha tslefny bash tdwez mamak u ghatsayfet lيا khaas gher siyadtkom nQanaek tsheedy mny lflos u blama tbeeay tele dyalk`,
+            `nty rah l amal dyaly fhad lhayat kent kareh denya kareh rasy kareh kulshy dkhalty lhyaty bdelteeha l ahsan khleteny nfrah bzzf ndhak mn Qalby fhal shy nor lQany west dlaam u med lya idoo ateteny haja alash aslan nkhaf u nbghey neash\n\nkhbet aleek wahd lhaja ms khasny ngolha leek ms mabghiteksh tQalQy hafsa mashy khet rajel mina ms hya l'ex dyaly dwezt meaha 4 ans u ktar imken utfareQna db 2 ans hya ly mselfany 4 millions ly gelt lek u mzl kanred leha db u hya ly gelt leha tslefny bash tdwez mamak u ghatsayfet lya khaas gher siyadtkom nQanaek tsheedy mny lflos u blama tbeeay tele dyalk`,
             `HAPPY BIRTHDAY TO L AHSAAAN BENT ARAFT FHYAATY 🥳🎂🤍 KANBGHEEEEK`
         ];
 
