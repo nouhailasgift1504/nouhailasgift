@@ -35,65 +35,32 @@
             position: relative;
         }
 
-        /* --- الحركات (Animations) - رديناهم هنا --- */
-        @keyframes softHeartbeat { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.15); } 
-        }
+        /* --- الحركات (Animations) --- */
+        @keyframes softHeartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes pointingAction { from { transform: translateX(0); } to { transform: translateX(12px); } }
+        @keyframes cakeBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes heartbeat { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } }
+        @keyframes iconPopUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes heartPulseSlow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-        @keyframes pointingAction { 
-            from { transform: translateX(0); } 
-            to { transform: translateX(12px); } 
-        }
-
-        @keyframes cakeBounce { 
-            0%, 100% { transform: translateY(0); } 
-            50% { transform: translateY(-15px); } 
-        }
-
-        @keyframes heartbeat { 
-            0%, 100% { transform: translateX(-50%) scale(1); } 
-            50% { transform: translateX(-50%) scale(1.05); } 
-        }
-
-        @keyframes iconPopUp { 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        @keyframes heartPulseSlow { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.03); } 
-        }
-
-        /* --- تطبيق الحركات على العناصر --- */
-        .heart-pulse { 
-            width: 55px; 
-            animation: softHeartbeat 2s infinite ease-in-out; 
-        }
-
-        .pointing-back { 
-            animation: pointingAction 0.8s infinite alternate ease-in-out; 
-        }
-
+        /* --- تطبيق الحركات --- */
+        .heart-pulse { width: 55px; animation: softHeartbeat 2s infinite ease-in-out; }
+        .pointing-back { animation: pointingAction 0.8s infinite alternate ease-in-out; }
         .cake-btn {
-            position: absolute; bottom: 8%;
+            position: absolute; 
+            bottom: calc(env(safe-area-inset-bottom) + 8%);
             background: none; border: none; cursor: pointer;
             animation: cakeBounce 2s infinite ease-in-out;
         }
-
         .pulse-text {
             position: absolute; top: 16%; left: 50%; transform: translateX(-50%);
             width: 80%; animation: heartbeat 1.5s infinite ease-in-out;
         }
 
-        /* --- الصفحة 1 --- */
-        #page1 {
-            display: flex; justify-content: center;
-            background-image: url('https://i.postimg.cc/W3HKgsj0/NOU-FIRST-PAGE-v2.png');
-        }
+        /* --- الأقسام --- */
+        #page1 { display: flex; justify-content: center; background-image: url('https://i.postimg.cc/W3HKgsj0/NOU-FIRST-PAGE-v2.png'); }
         .cake-img { width: 280px; }
 
-        /* --- الصفحة 2 --- */
         #step2 { background-image: url('https://i.postimg.cc/GmGwkK8Q/bg-nexy-page.png'); }
         .icons-container {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -103,28 +70,41 @@
         .show-icon { animation: iconPopUp 0.6s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .icon-img { width: 100%; max-width: 100px; }
 
-        /* --- صفحة الرسالة --- */
-        #messagePage {
-            background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png');
-            background-size: 100% 100%;
-        }
+        #messagePage { background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png'); background-size: 100% 100%; }
         .message-scroll-area {
             position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
             width: 72%; height: 58%; overflow-y: auto; padding: 10px;
             scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
-        .message-scroll-area::-webkit-scrollbar { display: none; }
         .message-content { color: #1a1a1a; font-size: 1.05rem; line-height: 1.6; text-align: left; white-space: pre-line; font-weight: 800; }
 
-        /* --- صفحة الفيديو والصور --- */
+        /* --- تعديل الفيديو (صغير ومسنتر) --- */
         #step3 { background-image: url('https://i.postimg.cc/rygbSCy8/video-bg-v3.png'); }
         #photosPage { background-image: url('https://i.postimg.cc/vZMt3DQh/bg-pic-v4.png'); }
-        .video-wrapper { position: absolute; top: 43.5%; left: 50.5%; transform: translateX(-50%); width: 80%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; }
-        .moving-elements { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/ydDWfGTH/moving-things-dyal-pg-piic.png'); background-size: contain; background-repeat: no-repeat; animation: heartPulseSlow 2s infinite ease-in-out; pointer-events: none; }
+        
+        .video-wrapper { 
+            position: absolute; 
+            top: 45.8%; /* مسنتر وسط الصندوق */
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 76%; /* العرض اللي طلبتي */
+            aspect-ratio: 16 / 9; 
+            border-radius: 10px; 
+            overflow: hidden; 
+        }
 
-        /* --- أزرار التنقل --- */
+        .moving-elements { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background-image: url('https://i.postimg.cc/ydDWfGTH/moving-things-dyal-pg-piic.png'); 
+            background-size: contain; background-repeat: no-repeat; 
+            animation: heartPulseSlow 2s infinite ease-in-out; pointer-events: none; 
+        }
+
+        /* --- أزرار التنقل (متوافقة مع آيفون) --- */
         .nav-buttons {
-            position: absolute; bottom: 5%; width: 100%;
+            position: absolute; 
+            bottom: calc(env(safe-area-inset-bottom) + 20px); /* دفع الأزرار فوق بار سفاري */
+            width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 45px; box-sizing: border-box; z-index: 20;
         }
