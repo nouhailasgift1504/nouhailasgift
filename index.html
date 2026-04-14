@@ -2,15 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surprise Nouhaila 🎂</title>
     <link href="https://fonts.googleapis.com/css2?family=Chalkboard+SE&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* حل مشكل التقطيع الفوقاني باستعمال dvh */
         body, html {
             margin: 0; padding: 0;
-            height: 100dvh; width: 100%;
+            height: 100%; width: 100%;
             overflow: hidden;
             background-color: #f9ebff;
             font-family: 'Chalkboard SE', 'Comic Neue', cursive;
@@ -18,188 +17,282 @@
         }
 
         #app-container {
-            width: 100vw; height: 100dvh;
+            width: 100vw; height: 100vh;
             max-width: 450px;
             position: relative;
+            border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             overflow: hidden;
             background-color: #fff;
         }
 
-        /* جعل الصور تظهر كاملة دون تقطيع */
-        .page-section {
-            display: none; width: 100%; height: 100%;
-            background-size: contain; 
-            background-repeat: no-repeat;
-            background-position: center center;
-            position: relative;
-        }
-
-        /* --- الصفحة 1 --- */
+        /* --- الصفحة 1: الكيكة --- */
         #page1 {
-            display: flex; justify-content: center;
+            width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/wvMHFd2f/NOU-FIRST-PAGE.png');
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center;
         }
 
         .cake-btn {
-            position: absolute; bottom: 8%;
+            position: absolute; bottom: 5%;
             background: none; border: none; cursor: pointer;
             animation: cakeBounce 2s infinite ease-in-out;
         }
-        @keyframes cakeBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .cake-img { width: 280px; }
 
-        /* --- الصفحة 2 --- */
+        @keyframes cakeBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .cake-img { width: 300px; }
+
+        /* --- الصفحة 2: الأيقونات --- */
         #step2 {
+            display: none; width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/GmGwkK8Q/bg-nexy-page.png');
+            background-size: cover; background-position: center;
+            position: relative;
         }
 
         .pulse-text {
-            position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
-            width: 80%; animation: heartbeat 1.5s infinite ease-in-out;
+            position: absolute; top: 14.5%; left: 50%; transform: translateX(-50%);
+            width: 85%; animation: heartbeat 1.5s infinite ease-in-out;
         }
+
         @keyframes heartbeat { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } }
 
         .icons-container {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            display: flex; gap: 10px; width: 90%;
+            position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; gap: 10px; width: 95%;
         }
+
         .icon-btn { background: none; border: none; cursor: pointer; flex: 1; opacity: 0; transform: translateY(40px); }
         .show-icon { animation: iconPopUp 0.6s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes iconPopUp { to { opacity: 1; transform: translateY(0); } }
-        .icon-img { width: 100%; max-width: 100px; }
+        .icon-img { width: 100%; max-width: 110px; }
 
-        /* --- صفحة الرسالة (الإصلاح الجذري) --- */
-        #messagePage {
-            background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png');
-            background-size: 100% 100%;
+        /* --- الأزرار والتنقل --- */
+        .nav-buttons {
+            position: absolute; bottom: 6%; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 40px; box-sizing: border-box; z-index: 10;
         }
 
+        .heart-pulse { width: 60px; animation: softHeartbeat 2s infinite ease-in-out; }
+        @keyframes softHeartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+        .nav-btn { background: none; border: none; cursor: pointer; width: 50px; }
+        .nav-img { width: 100%; }
+
+        .pointing-back { animation: pointingAction 0.8s infinite alternate ease-in-out; }
+        @keyframes pointingAction { from { transform: translateX(0); } to { transform: translateX(12px); } }
+
+        /* --- صفحة الرسالة (الإصلاح النهائي) --- */
+        #messagePage {
+            display: none; width: 100%; height: 100%;
+            background-image: url('https://i.postimg.cc/jSPZkshF/message-bg.png');
+            background-size: 100% 100%; position: relative;
+        }
+
+        /* حاوية النص الشفافة وسط الورقة */
         .message-scroll-area {
             position: absolute;
-            top: 18%; left: 50%; transform: translateX(-50%);
-            width: 72%; height: 58%;
-            overflow-y: auto;
+            top: 16%; left: 50%;
+            transform: translateX(-50%);
+            width: 75%; /* ضيقنا العرض باش ما يخرجش على جوانب الورقة */
+            height: 62%; /* طول محدد باش ما يقيسش الزواق اللي فوق ولا الأزرار لتحت */
+            overflow-y: auto; /* هادي كدير Scroll لداخل */
             padding: 10px;
-            scrollbar-width: none;
+            display: block;
+            scrollbar-width: none; /* حيدنا المسطرة في Firefox */
         }
-        .message-scroll-area::-webkit-scrollbar { display: none; }
+        
+        .message-scroll-area::-webkit-scrollbar { display: none; } /* حيدنا المسطرة في Chrome/Safari */
 
         .message-content {
-            color: #1a1a1a; font-size: 1.05rem; line-height: 1.6;
-            text-align: left; white-space: pre-line; font-weight: 800;
+            color: #1a1a1a;
+            font-size: 1.1rem; /* قياس مثالي للهواتف */
+            line-height: 1.6;
+            text-align: left;
+            white-space: pre-line;
+            font-weight: 800;
+            margin: 0;
+            padding-bottom: 20px;
         }
 
-        /* --- صفحة الفيديو والصور --- */
-        #step3 { background-image: url('https://i.postimg.cc/cHQ15tzC/video-bg.png'); }
-        #photosPage { background-image: url('https://i.postimg.cc/K8XqmKph/bg-pic-v3.png'); }
-        
+        /* --- صفحة الفيديو --- */
+        #step3 { 
+            display: none; width: 100%; height: 100%; 
+            background-image: url('https://i.postimg.cc/cHQ15tzC/video-bg.png'); 
+            background-size: cover; position: relative; 
+        }
+
         .video-wrapper { 
-            position: absolute; top: 32%; left: 50%; 
-            transform: translateX(-50%); width: 84%; 
-            aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; 
+            position: absolute; top: 33.5%; left: 50%; 
+            transform: translateX(-50%); width: 86%; 
+            aspect-ratio: 16 / 9; border-radius: 10px; 
+            overflow: hidden; 
+        }
+
+        /* --- صفحة الصور --- */
+        #photosPage {
+            display: none; width: 100%; height: 100%;
+            background-image: url('https://i.postimg.cc/K8XqmKph/bg-pic-v3.png');
+            background-size: cover; background-position: center;
+            position: relative;
         }
 
         .moving-elements {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/ydDWfGTH/moving-things-dyal-pg-piic.png');
-            background-size: contain; background-repeat: no-repeat;
-            animation: heartPulseSlow 2s infinite ease-in-out; pointer-events: none;
+            background-size: cover;
+            animation: heartPulseSlow 2s infinite ease-in-out;
+            pointer-events: none;
         }
-
-        /* --- أزرار التنقل --- */
-        .nav-buttons {
-            position: absolute; bottom: 5%; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 45px; box-sizing: border-box; z-index: 20;
-        }
-        .nav-btn { background: none; border: none; cursor: pointer; width: 45px; }
-        .nav-img { width: 100%; }
-        .heart-pulse { width: 55px; animation: softHeartbeat 2s infinite ease-in-out; }
-        @keyframes softHeartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        @keyframes heartPulseSlow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
     </style>
 </head>
 <body>
 
     <div id="app-container">
-        <div id="page1" class="page-section" style="display: flex;">
+        <div id="page1">
             <button class="cake-btn" onclick="goToStep2()">
                 <img src="https://i.postimg.cc/3w4Kmtx1/NOOU-CAKE.png" class="cake-img">
             </button>
         </div>
 
-        <div id="step2" class="page-section">
+        <div id="step2">
             <img src="https://i.postimg.cc/Vvmd8vxG/teext-ly-khas-ibqa-itharek.png" class="pulse-text">
             <div class="icons-container">
-                <button class="icon-btn" onclick="goToStep3()"><img src="https://i.postimg.cc/j2bJSZ7X/video-icon.png" class="icon-img"></button>
-                <button class="icon-btn" onclick="openPhotos()"><img src="https://i.postimg.cc/qR9xXsCw/camera-icone-3.png" class="icon-img"></button>
-                <button class="icon-btn" onclick="openMessage()"><img src="https://i.postimg.cc/5NJw4N50/message-icon.png" class="icon-img"></button>
+                <button class="icon-btn" onclick="goToStep3()">
+                    <img src="https://i.postimg.cc/j2bJSZ7X/video-icon.png" class="icon-img">
+                </button>
+                <button class="icon-btn" onclick="openPhotos()">
+                    <img src="https://i.postimg.cc/qR9xXsCw/camera-icone-3.png" class="icon-img">
+                </button>
+                <button class="icon-btn" onclick="openMessage()">
+                    <img src="https://i.postimg.cc/5NJw4N50/message-icon.png" class="icon-img">
+                </button>
             </div>
         </div>
 
-        <div id="messagePage" class="page-section">
+        <div id="messagePage">
             <div class="message-scroll-area">
                 <div class="message-content" id="msgContent"></div>
             </div>
+            
             <div class="nav-buttons">
-                <button class="nav-btn" id="nextBtn" onclick="nextPage()"><img src="https://i.postimg.cc/tgmfDG8z/nexr-botton.png" class="nav-img"></button>
+                <button class="nav-btn" id="nextBtn" onclick="nextPage()">
+                    <img src="https://i.postimg.cc/tgmfDG8z/nexr-botton.png" class="nav-img">
+                </button>
                 <img src="https://i.postimg.cc/zDyMFY4M/heart-ben-back-and-next.png" class="heart-pulse">
-                <button class="nav-btn" onclick="prevPage()"><img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img"></button>
+                <button class="nav-btn" onclick="prevPage()">
+                    <img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img">
+                </button>
             </div>
         </div>
 
-        <div id="step3" class="page-section">
+        <div id="step3">
             <div class="video-wrapper">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/xOsR37vYMDc" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="nav-buttons" style="justify-content: flex-end;">
-                <button class="nav-btn" onclick="backToStep2()"><img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img"></button>
+                <button class="nav-btn pointing-back" onclick="backToStep2()">
+                    <img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img">
+                </button>
             </div>
         </div>
 
-        <div id="photosPage" class="page-section">
+        <div id="photosPage">
             <div class="moving-elements"></div>
             <div class="nav-buttons" style="justify-content: flex-end;">
-                <button class="nav-btn" onclick="backToStep2()"><img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img"></button>
+                <button class="nav-btn pointing-back" onclick="backToStep2()">
+                    <img src="https://i.postimg.cc/XJmRN6g1/back-botton.png" class="nav-img">
+                </button>
             </div>
         </div>
     </div>
 
     <script>
         const messagePages = [
-            `ehm ehhmm test allah allah hh db 01:32 06/04/2026 ylh db shweeya bash kena dawen appel video darook ktafeek b shteeh hhh shikha trax hh\n\nnouhaila nty wahd lhaja ly ghalya bzzf alya ulh arafteek sodfa ms kant ahsan sodfa fhyaty mashy bzzf dyal lwaqt bash arafteek ms ulh hta mashy gher kanbgheek shy hajaa bzzf nty mashy gher hbebty nty benty maghansash nhar gelty lya kanshof nas mea walidihum u kaybqa fya lhal mn tema Qarert neawdeek ela kulshy neawdek ela kol mara bkety feha ula tQaleQty feha ula adak feha shy had Qarert nkon sanad leek u dhar leek tsendy eleeh rask f ay haja ila denya kulha khelateek ana ulh mankhaleek wakha nearf nmoot`,
-            `aref rasy kanbqa mbarztek b finek u dekhly matmshish ms gher kankhaf aleek mn kulshy kankhaf aleek mn bnadem mn rasy mn kulshy kankhaaf aleek ktar mn rasy ulh frask kent Qbel ma nearfek kangol mpomken nder l'operation ela lQalb u masoQesh ly bgha itra itra ms mly arafteek wleet khayf bzzf khayf nkhalek bohdek amerny kheft mn lmot ulh ms wleet khayf bzzf wlet kanthela frasy ela Qeblek bash tebQaysh buhdek\n\namerny kheft nkhser shy had ula aslan makntsaweQsh lshy had hta eraftek wleet hateek f maQam kbeer bzzf nQdar ngoleek nty aktar haja kankhaf aleeha fhad denya u mabagheesh nfeQ shy nhar matkoniish meaya l ay sabab`,
-            `nty rah l amal dyaly fhad lhayat kent kareh denya kareh rasy kareh kulshy dkhalty lhyaty bdelteeha l ahsan khleteny nfrah bzzf ndhak mn Qalby fhal shy nor lQany west dlaam u med lya idoo ateteny haja alash aslan nkhaf u nbghey neash\n\nkhbet aleek wahd lhaja ms khasny ngolha leek ms mabghiteksh tQalQy hafsa mashy khet rajel mina ms hya l'ex dyaly dwezt meaha 4 ans u ktar imken utfareQna db 2 ans hya ly mselfany 4 millions ly gelt lek u mzl kanred leha db u hya ly gelt leha tslefny bash tdwez mamak u ghatsayfet lya khaas gher siyadtkom nQanaek tsheedy mny lflos u blama tbeeay tele dyalk`,
-            `HAPPY BIRTHDAY TO L AHSAAAN BENT ARAFT FHYAATY 🥳🎂🤍 KANBGHEEEEK`
+            `ehm ehhmm test allah allah hh db 01:32 06/04/2026 ylh db shweeya bash kena dawen appel video darook ktafeek b shteeh hhh shikha trax hh
+
+            nouhaila nty wahd lhaja ly ghalya bzzf alya ulh arafteek sodfa ms kant ahsan sodfa fhyaty mashy bzzf dyal lwaqt bash arafteek ms ulh hta mashy gher kanbgheek shy hajaa bzzf nty mashy gher hbebty nty benty maghansash nhar gelty lya kanshof nas mea walidihum u kaybqa fya lhal mn tema Qarert neawdeek ela kulshy neawdek ela kol mara bkety feha ula tQaleQty feha ula adak feha shy had Qarert nkon sanad leek u dhar leek tsendy eleeh rask f ay haja ila denya kulha khelateek ana ulh mankhaleek wakha nearf nmoot`,
+            
+            `aref rasy kanbqa mbarztek b finek u dekhly matmshish ms gher kankhaf aleek mn kulshy kankhaf aleek mn bnadem mn rasy mn kulshy kankhaaf aleek ktar mn rasy ulh frask kent Qbel ma nearfek kangol mpomken nder l'operation ela lQalb u masoQesh ly bgha itra itra ms mly arafteek wleet khayf bzzf khayf nkhalek bohdek amerny kheft mn lmot ulh ms wleet khayf bzzf wlet kanthela frasy ela Qeblek bash tebQaysh buhdek 
+
+            amerny kheft nkhser shy had ula aslan makntsaweQsh lshy had hta eraftek wleet hateek f maQam kbeer bzzf nQdar ngoleek nty aktar haja kankhaf aleeha fhad denya u mabagheesh nfeQ shy nhar matkoniish meaya l ay sabab`,
+
+            `nty rah l amal dyaly fhad lhayat kent kareh denya kareh rasy kareh kulshy dkhalty lhyaty bdelteeha l ahsan khleteny nfrah bzzf ndhak mn Qalby fhal shy nor lQany west dlaam u med lya idoo ateteny haja alash aslan nkhaf u nbghey neash
+
+            khbet aleek wahd lhaja ms khasny ngolha leek ms mabghiteksh tQalQy hafsa mashy khet rajel mina ms hya l'ex dyaly dwezt meaha 4 ans u ktar imken utfareQna db 2 ans hya ly mselfany 4 millions ly gelt lek u mzl kanred leha db u hya ly gelt leha tslefny bash tdwez mamak u ghatsayfet lya khaas gher siyadtkom nQanaek tsheedy mny lflos u blama tbeeay tele dyalk`,
+
+            `mor matfareQna bQat relation dyaly meaha mzn Ulh mabQa beny u benha shy haja gher bghetek tearfy had shy mabghet nkhaby alek walo awedt leha eleek hya arfaany maknehmelsh nkhrej bzf gelt leha khrejt mara andha 2 fois f nhar wahd galt lya sfy kaatbgheha ulh maymkensh tkhrej 2 fois ala Qbel shy had hhh
+
+            had shy ghaywaslek mn num akhra matkhafesh gher dyaly het hya andy f pc ughaywaslek mnha had QR code mea 00:00 15/04/2015 u kantmena ieajbeek had l cadeau het gelty lya hadak nhar kun gher khlety hta 15 gelt frasy maghankhalehash blash lmhm gher haja bseeta usfy hh 
+
+            HAPPY BIRTHDAY TO L AHSAAAN BENT ARAFT FHYAATY 🥳🎂🤍 KANBGHEEEEK `
         ];
 
         let currentPage = 0;
 
         function goToStep2() {
-            hideAll();
+            document.getElementById('page1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
             const btns = document.querySelectorAll('.icon-btn');
-            btns.forEach((btn, i) => setTimeout(() => btn.classList.add('show-icon'), 200 + (i * 300)));
+            btns.forEach((btn, i) => {
+                setTimeout(() => btn.classList.add('show-icon'), 200 + (i * 300));
+            });
         }
 
-        function openMessage() { hideAll(); document.getElementById('messagePage').style.display = 'block'; updateMsg(); }
-        function openPhotos() { hideAll(); document.getElementById('photosPage').style.display = 'block'; }
-        function goToStep3() { hideAll(); document.getElementById('step3').style.display = 'block'; }
+        function openMessage() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('messagePage').style.display = 'block';
+            currentPage = 0;
+            updateMsg();
+        }
+
+        function openPhotos() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('photosPage').style.display = 'block';
+        }
 
         function updateMsg() {
             document.getElementById('msgContent').innerText = messagePages[currentPage];
             document.querySelector('.message-scroll-area').scrollTop = 0;
-            document.getElementById('nextBtn').style.visibility = (currentPage === messagePages.length - 1) ? 'hidden' : 'visible';
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentPage === messagePages.length - 1) {
+                nextBtn.style.visibility = 'hidden';
+            } else {
+                nextBtn.style.visibility = 'visible';
+            }
         }
 
-        function nextPage() { if (currentPage < messagePages.length - 1) { currentPage++; updateMsg(); } }
-        function prevPage() { if (currentPage > 0) { currentPage--; updateMsg(); } else { backToStep2(); } }
+        function nextPage() {
+            if (currentPage < messagePages.length - 1) {
+                currentPage++;
+                updateMsg();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updateMsg();
+            } else {
+                backToStep2();
+            }
+        }
+
+        function backToStep2() {
+            document.getElementById('messagePage').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('photosPage').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        }
         
-        function backToStep2() { hideAll(); document.getElementById('step2').style.display = 'block'; }
-        
-        function hideAll() {
-            document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
+        function goToStep3() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
         }
     </script>
 </body>
